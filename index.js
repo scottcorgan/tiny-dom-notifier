@@ -3,45 +3,41 @@ var contains = require('contains');
 var element = require('tiny-element');
 
 var defaultContext = document.body;
-var elementAddedQueue = [];
-var elementRemovedQueue = [];
+var elementAddedQueue = []; // track added items
+var elementRemovedQueue = []; // track removed items
+var notifiers = []; // Track notifiers so we don't duplicate them
 
 var notifier = function (selector) {
-  return new TrackedElement(selector);
+  return notifiers[selector] || (notifiers[selector] = new TrackedElement(selector));
 };
 
+
+//
 var elementAdded = function () {
-  for (var i in elementAddedQueue) {
-    var el = elementAddedQueue[i];
-    var els = element(el.selector, true);
-    
-    if (el.length < els.length) {
-      el.fn(els);
-    }
-    
-    // Set the DOm element length
-    el.length = length;
-  }
-  
-  if (elementAddedQueue.length) requestAnimationFrame(elementAdded);
+  elementChanged(elementAddedQueue, function (oldLen, newLen) {
+    return oldLen < newLen;
+  }, elementAdded);
 };
 
 var elementRemoved = function () {
-  for (var i in elementRemovedQueue) {
-    var el = elementRemovedQueue[i];
-    var length = element(el.selector, true).length;
+  elementChanged(elementRemovedQueue, function (oldLen, newLen) {
+    return oldLen > newLen;
+  }, elementRemoved);
+};
+
+var elementChanged = function (queue, comparator, callback) {
+  for (var i in queue) {
+    var el = queue[i];
+    var els = element(el.selector, true);
     
-    // Was one removed?
-    if (el.length > length) {
-      el.fn();
-    }
+    if (comparator(el.length, els.length)) el.fn(els);
     
-    // Set the DOm element length
-    el.length = length; 
+    el.length = els.length;
   }
   
-  if (elementRemovedQueue.length) requestAnimationFrame(elementRemoved);
+  if (queue.length) requestAnimationFrame(callback);
 };
+
 
 //
 TrackedElement = function (selector) {
@@ -60,6 +56,8 @@ TrackedElement.prototype.added = function (fn) {
   });
   
   if (elementAddedQueue.length) requestAnimationFrame(elementAdded);
+  
+  return this;
 };
 
 TrackedElement.prototype.removed = function (fn) {
@@ -72,6 +70,8 @@ TrackedElement.prototype.removed = function (fn) {
   });
   
   if (elementRemovedQueue.length) requestAnimationFrame(elementRemoved);
+  
+  return this;
 };
 
 module.exports = notifier;

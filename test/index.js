@@ -14,32 +14,60 @@ test('executes callback if DOM element already exists', function (t) {
 });
 
 test('executes callback when DOM element is added', function (t) {
-  notifier('#test2')
+  var calls = 0;
+  
+  notifier('.test2')
     .added(function () {
-      t.ok(element('#test2'), 'element was added');
-      t.end();
+      t.ok(element('.test2'), 'element was added');
+      calls += 1;
     });
   
   setTimeout(function () {
-    document.body.appendChild(dom('<div id="test2"></div>'));
-  }, 0);
+    document.body.appendChild(dom('<div class="test2"></div>'));
+    
+    setTimeout(function () {
+      document.body.appendChild(dom('<div class="test2"></div>'));
+      
+      setTimeout(function () {
+        t.equal(calls, 2, '2 elements were added');
+        t.end();
+      }, 10);
+    }, 10);
+  }, 10);
 });
 
 test('executes callback when DOM element is removed', function (t) {
-  document.body.appendChild(dom('<div id="test3"></div>'));
+  var calls = 0;
   
-  notifier('#test3')
+  document.body.appendChild(dom('<div class="test3"></div>'));
+  
+  notifier('.test3')
     .removed(function () {
+      calls += 1;
+      
       t.notOk(element('#test3'), 'element removed');
-      t.end();
+    })
+    .removed(function (elements) {
+      calls += 1;
     });
   
   setTimeout(function () {
-    document.body.removeChild(element('#test3'));
-  }, 0);
+    document.body.removeChild(element('.test3'));
+    
+    setTimeout(function () {
+      t.equal(calls, 2, 'called both callbacks');
+      t.end();
+    }, 10);
+  }, 10);
 });
 
-test('delets remove callback', function (t) {
-  // notifier("#test5").remove(function () {}).cancel();
-  t.end();
-});
+// test('deletes remove callback', function (t) {
+//   notifier("#test5")
+//     .remove(function () {
+      
+//     });
+  
+//   notifier('#test5').cancel():
+  
+//   t.end();
+// });
