@@ -1,5 +1,4 @@
 var requestAnimationFrame = require('raf-component');
-var contains = require('contains');
 var element = require('tiny-element');
 
 var defaultContext = document.body;

@@ -63,7 +63,7 @@ test('executes callback when DOM element is removed', function (t) {
 
 // test('deletes remove callback', function (t) {
 //   notifier("#test5")
-//     .remove(function () {
+//     .removed(function () {
       
 //     });
   

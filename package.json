@@ -1,10 +1,13 @@
 {
   "name": "tiny-dom-notifier",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Get notified when certain DOM elements are created or removed",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/testling | node_modules/.bin/tspec"
+    "test": "node_modules/.bin/testling | node_modules/.bin/tspec",
+    "bundle": "node_modules/.bin/browserify index.js -s tinyDomNotifier > dist/tinydomnotifier.js && echo 'Bundled'",
+    "minify": "node_modules/.bin/uglifyjs dist/tinydomnotifier.js -o dist/tinydomnotifier.min.js -m && echo 'Minified'",
+    "build": "npm test && npm run bundle && npm run minify"
   },
   "repository": {
     "type": "git",
@@ -47,7 +50,6 @@
   },
   "dependencies": {
     "raf-component": "~1.1.2",
-    "contains": "~0.1.1",
     "tiny-element": "~0.1.3"
   }
 }
