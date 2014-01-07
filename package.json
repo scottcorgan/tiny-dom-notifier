@@ -1,6 +1,6 @@
 {
   "name": "tiny-dom-notifier",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Get notified when certain DOM elements are created or removed",
   "main": "index.js",
   "scripts": {

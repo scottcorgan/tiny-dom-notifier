@@ -20,20 +20,16 @@ test('executes callback when DOM element is added', function (t) {
     .added(function () {
       t.ok(element('.test2'), 'element was added');
       calls += 1;
+      
+      setTimeout(function () {
+        t.equal(calls, 1, '1 element were added');
+        t.end();
+      }, 0);
     });
   
   setTimeout(function () {
     document.body.appendChild(dom('<div class="test2"></div>'));
-    
-    setTimeout(function () {
-      document.body.appendChild(dom('<div class="test2"></div>'));
-      
-      setTimeout(function () {
-        t.equal(calls, 2, '2 elements were added');
-        t.end();
-      }, 50);
-    }, 50);
-  }, 50);
+  }, 0);
 });
 
 test('executes callback when DOM element is removed', function (t) {
@@ -49,16 +45,16 @@ test('executes callback when DOM element is removed', function (t) {
     })
     .removed(function (elements) {
       calls += 1;
+      
+      setTimeout(function () {
+        t.equal(calls, 2, 'called both callbacks');
+        t.end();
+      }, 0);
     });
   
   setTimeout(function () {
     document.body.removeChild(element('.test3'));
-    
-    setTimeout(function () {
-      t.equal(calls, 2, 'called both callbacks');
-      t.end();
-    }, 50);
-  }, 50);
+  }, 0);
 });
 
 // test('deletes remove callback', function (t) {
