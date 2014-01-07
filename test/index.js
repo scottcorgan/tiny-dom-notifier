@@ -31,9 +31,9 @@ test('executes callback when DOM element is added', function (t) {
       setTimeout(function () {
         t.equal(calls, 2, '2 elements were added');
         t.end();
-      }, 10);
-    }, 10);
-  }, 10);
+      }, 50);
+    }, 50);
+  }, 50);
 });
 
 test('executes callback when DOM element is removed', function (t) {
@@ -57,8 +57,8 @@ test('executes callback when DOM element is removed', function (t) {
     setTimeout(function () {
       t.equal(calls, 2, 'called both callbacks');
       t.end();
-    }, 10);
-  }, 10);
+    }, 50);
+  }, 50);
 });
 
 // test('deletes remove callback', function (t) {
