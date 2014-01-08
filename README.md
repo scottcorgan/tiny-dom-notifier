@@ -1,6 +1,6 @@
 # tiny-dom-notifier
  
-Get notified when certain DOM elements are created or removed. Works as a standalone script or with [Browserify](http://browserify.org).
+Get notified when a given DOM elements are created or removed. Works as a standalone script or with [Browserify](http://browserify.org).
 
 [![browser support](https://ci.testling.com/scottcorgan/tiny-dom-notifier.png)](https://ci.testling.com/scottcorgan/tiny-dom-notifier)
  

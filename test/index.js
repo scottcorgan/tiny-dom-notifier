@@ -57,13 +57,14 @@ test('executes callback when DOM element is removed', function (t) {
   }, 0);
 });
 
-// test('deletes remove callback', function (t) {
-//   notifier("#test5")
-//     .removed(function () {
-      
-//     });
+// test('cancels "removed" listener', function (t) {
+//   var calls = 0;
   
-//   notifier('#test5').cancel():
+//   notifier("#test5").on('removed', function () {
+    
+//   });
+  
+//   notifier('#test5').cancel('removed');
   
 //   t.end();
 // });

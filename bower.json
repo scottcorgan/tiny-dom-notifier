@@ -1,12 +1,12 @@
 {
   "name": "tiny-dom-notifier",
   "main": "dist/tinydomnotifier.js",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/scottcorgan/tiny-dom-notifier",
   "authors": [
     "Scott Corgan <scottcorgan@gmail.com>"
   ],
-  "description": "Get notified when certain DOM elements are created or removed",
+  "description": "Get notified when a given DOM element is created or removed",
   "keywords": [
     "tiny",
     "dom",
